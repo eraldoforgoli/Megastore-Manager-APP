@@ -48,6 +48,3 @@ Basket Info
 - All the actions are performed using File Serialisation, so careful where you place the files in the project.  
 The path is absolute. 
 
-## Contributing
-Pull requests are welcome. 
-
