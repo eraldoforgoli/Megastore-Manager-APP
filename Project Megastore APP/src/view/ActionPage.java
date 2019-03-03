@@ -414,14 +414,7 @@ public class ActionPage extends javax.swing.JFrame {
 
 		// get the customer name that is being served to
 		customerUsername = JOptionPane.showInputDialog("Enter customer username");
-
 		User user = customerController.getCustomer(customerUsername);
-
-		//
-
-		// me ane te metodes checkCustomer te klases process kontrolloj per username te
-		// sakte te futur nga cashier,
-		// nese rezulton username i sakte, kryhen rritjet e pikeve
 
 		/*
 		 * Check if the customer exists, if true, increase the bonus points
@@ -438,7 +431,6 @@ public class ActionPage extends javax.swing.JFrame {
 		basket.increaseNumberOfBaskets();
 		basket.setDate();
 
-		// zbrazim listat me informacionet mbi Items te blere
 		/*
 		 * Empty the information lists about the bought items
 		 */

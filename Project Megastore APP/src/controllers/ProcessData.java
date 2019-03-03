@@ -17,7 +17,6 @@ import entities.items.ItemTakeItAll;
 import entities.items.ItemWithDiscount;
 import entities.items.*;
 
-
 public class ProcessData {
 
 	private double price;
@@ -54,7 +53,6 @@ public class ProcessData {
 	private ItemCreator itemCreator;
 	private UserCreator userCreator;
 
-
 	public ProcessData() {
 		countItemInOffer = 0;
 		itemCount = 0;
@@ -65,15 +63,14 @@ public class ProcessData {
 
 		price = 0.0;
 		itemPrice = 0.0;
-		cashier1 = new Cashier("Denisa", "Shkembi", "denisashkembi", "denisa2018", "Rruga e Durresit", "0681111111",
-				"0442020", 355);
-		cashier2 = new Cashier("Denis", "Hoxha", "denishoxha", "denis2018", "Rruga e Durresit", "0681111111", "0442020",
-				355);
+		cashier1 = new Cashier("John", "Doe", "johndoe", "john", "Rruga e Durresit", "0681111111", "0442020", 355);
+		cashier2 = new Cashier("Denis", "Haxhi", "denis", "denid", "Rruga e Durresit", "0681111111", "0442020", 355);
 		cashier3 = new Cashier("Endri", "Marku", "endrimarku", "endri2018", "Rruga e Durresit", "0681111111", "0442020",
 				355);
 		cashier4 = new Cashier("Kledis", "Molla", "kledismolla", "kledis2018", "Rruga e Durresit", "0681111111",
 				"0442020", 355);
-		cashier5 = new Cashier("Eraldo", "Forgoli", "eraldoforgoli", "eraldo", "Rruga e Durresit", "0681111111", "0442020", 355);
+		cashier5 = new Cashier("Eraldo", "Forgoli", "eraldoforgoli", "eraldo", "Rruga e Durresit", "0681111111",
+				"0442020", 355);
 
 		manager = new Manager("Arbjon", "Mali", "arbjonmali", "arbjon1", "Rruga e Durresit", "0681111111", "0442020",
 				11754);
@@ -105,7 +102,6 @@ public class ProcessData {
 	public void processBasketData(String itemName, StoreBasket basket) {
 		for (int i = 0; i < items.size(); i++) {
 			if (itemName.equals(items.get(i).getName())) {
-
 				basket.addItem(itemName);
 				basket.increaseAmount();
 				if (itemName.equals(items.get(i).getName()) && items.get(i).getClass() == ItemWithDiscount.class) {
@@ -114,36 +110,28 @@ public class ProcessData {
 					a1.calculateDiscount();
 
 					itemWithDiscountCount++;
-				}
-
-				else if (itemName.equals(items.get(i).getName())
+				} else if (itemName.equals(items.get(i).getName())
 						&& items.get(i).getClass() == ItemPartlyIndependence.class) {
 					Item a = items.get(i);
 					ItemPartlyIndependence a1 = (ItemPartlyIndependence) a;
 					a1.calculateDiscount();
 					itemPartlyIndependenceCount++;
-				}
-
-				else if (itemName.equals(items.get(i).getName()) && items.get(i).getClass() == ItemTakeItAll.class) {
+				} else if (itemName.equals(items.get(i).getName()) && items.get(i).getClass() == ItemTakeItAll.class) {
 					ItemTakeItAll a = (ItemTakeItAll) items.get(i);
 					ItemTakeItAll a1 = (ItemTakeItAll) a;
 					a1.calculateDiscount();
 
 					itemTakeItAllCount++;
 
-				}
-
-				else if (itemName.equals(items.get(i).getName()) && items.get(i).getClass() == ItemInOffer.class) {
+				} else if (itemName.equals(items.get(i).getName()) && items.get(i).getClass() == ItemInOffer.class) {
 					countItemInOffer++;
 					itemInOfferCount++;
 				} else {
 					itemCount++;
 				}
-
 				if (countItemInOffer >= 5) {
 					itemPrice = items.get(i).getPrice();
 					basket.changePrice((itemPrice * 2 * countItemInOffer) / 5);
-
 				} else {
 					itemPrice = items.get(i).getPrice();
 					basket.changePrice(itemPrice);
@@ -229,19 +217,13 @@ public class ProcessData {
 			if (users.get(i) instanceof LoyalCustomer) {
 				System.out.println(((LoyalCustomer) users.get(i)).getName() + ", Bonus : "
 						+ ((LoyalCustomer) users.get(i)).getPoints());
-			}
-
-			else if (users.get(i) instanceof GroupCustomer) {
+			} else if (users.get(i) instanceof GroupCustomer) {
 				System.out.println(((GroupCustomer) users.get(i)).getName() + ", Bonus : "
 						+ ((GroupCustomer) users.get(i)).getPoints());
-			}
-
-			else if (users.get(i) instanceof CustomerEmployee) {
+			} else if (users.get(i) instanceof CustomerEmployee) {
 				System.out.println(((CustomerEmployee) users.get(i)).getName() + ", Bonus : "
 						+ ((CustomerEmployee) users.get(i)).getPoints());
-			}
-
-			else {
+			} else {
 				System.out.println("Simple Customer, no bonus!");
 			}
 		}
@@ -253,7 +235,6 @@ public class ProcessData {
 	}
 
 	public int getNrOfBaskets(String userLogged) {
-
 		for (int i = 0; i < cashiers.size(); i++) {
 			if (userLogged.equals(cashiers.get(i).getUsername()))
 				return cashiers.get(i).getBasketsProcessed();
@@ -277,14 +258,11 @@ public class ProcessData {
 	}
 
 	public void calculateSalary(long workHours) {
-
 		if (userLogged.equals("denisashkembi")) {
 			double total1 = cashier1.calculatePayment(workHours);
 			cashier1.setTotalSalary(total1);
 			System.out.println("\nSalary  for Endri Marku is :  " + total1);
-		}
-
-		else if (userLogged.equals("denishoxha")) {
+		} else if (userLogged.equals("denishoxha")) {
 			double total2 = cashier2.calculatePayment(workHours);
 			cashier2.setTotalSalary(total2);
 			System.out.println("\n salary  for Denis Hoxha is :  " + total2);
