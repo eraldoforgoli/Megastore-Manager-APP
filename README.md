@@ -51,5 +51,3 @@ The path is absolute.
 ## Contributing
 Pull requests are welcome. 
 
-## License
-MIT
