@@ -1,103 +1,93 @@
 package controllers;
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import javax.swing.JOptionPane;
-
 public class StoreBasketFile {
-	private static ObjectOutputStream output;
-	private static ObjectInputStream input;
-	private FileOutputStream fos;
-	private FileInputStream fis;
+    private static ObjectOutputStream output;
+    private static ObjectInputStream input;
+    private FileOutputStream fos;
+    private FileInputStream fis;
 
-	public StoreBasketFile() {
-		output = null;
+    public StoreBasketFile() {
+        output = null;
+        fos = null;
+    }
 
-		fos = null;
-	}
+    public void addStoreBasketToFile(ArrayList<StoreBasket> baskets) {
+        try {
+            fos = new FileOutputStream("baskets.ser");
+            output = new ObjectOutputStream(fos);
 
-	public void addStoreBasketToFile(ArrayList<StoreBasket> baskets) {
-		try {
-			fos = new FileOutputStream("baskets.ser");
-			output = new ObjectOutputStream(fos);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error opening file for writing.");
+            System.exit(1);
+        }
+        try {
+            for (StoreBasket s : baskets)
 
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Error opening file for writing.");
-			System.exit(1);
-		}
-		try {
-			for (StoreBasket s : baskets)
+                output.writeObject(s);
+            JOptionPane.showMessageDialog(null, "Basket saved successfully.");
+        } catch (NoSuchElementException ex) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (output != null) {
+                output.close();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error closing file .");
+        }
+    }
 
-				output.writeObject(s);
-			JOptionPane.showMessageDialog(null, "Basket saved successfully.");
-		} catch (NoSuchElementException ex) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			if (output != null) {
-				output.close();
-			}
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Error closing file .");
-		}
-	}
+    public ArrayList<StoreBasket> readBaskets() {
+        ArrayList<StoreBasket> baskets = new ArrayList<StoreBasket>();
+        try {
+            fis = new FileInputStream("baskets.ser");
+            input = new ObjectInputStream(fis);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error opening file for reading.");
+            System.exit(1);
+        }
+        try {
+            while (true) {
+                JOptionPane.showMessageDialog(null, ((StoreBasket) input.readObject()).getBasketInfo());
+                baskets.add((StoreBasket) input.readObject());
+            }
+        } catch (EOFException endOfFileException) {
+        } catch (ClassNotFoundException classNotFoundException) {
+        } catch (IOException ioException) {
+            JOptionPane.showMessageDialog(null, "Error reading in file.");
+        }
 
-	public ArrayList<StoreBasket> readBaskets() {
-		ArrayList<StoreBasket> baskets = new ArrayList<StoreBasket>();
-		try {
-			fis = new FileInputStream("baskets.ser");
-			input = new ObjectInputStream(fis);
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Error opening file for reading.");
-			System.exit(1);
-		}
-		try {
-			// System.out.println("Reading items ...");
-			while (true) {
-				JOptionPane.showMessageDialog(null, ((StoreBasket) input.readObject()).getBasketInfo());
-				baskets.add((StoreBasket) input.readObject());
-			}
-		} catch (EOFException endOfFileException) {
-		} catch (ClassNotFoundException classNotFoundException) {
-		} catch (IOException ioException) {
-			JOptionPane.showMessageDialog(null, "Error reading in file.");
-		}
+        try {
+            if (input != null) {
+                input.close();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error closing  file for reading.");
+            System.exit(1);
+        }
+        return baskets;
+    }
 
-		try {
-			if (input != null) {
-				input.close();
-			}
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Error closing  file for reading.");
-			System.exit(1);
-		}
-		return baskets;
-	}
+    public void openAndClose() {
+        try {
+            fos = new FileOutputStream("users.ser");
+            output = new ObjectOutputStream(fos);
 
-	public void openAndClose() {
-		try {
-			fos = new FileOutputStream("users.ser");
-			output = new ObjectOutputStream(fos);
+        } catch (IOException ex) {
+            System.out.println("Error opening file. Termination");
+            System.exit(1);
+        }
 
-		} catch (IOException ex) {
-			System.out.println("Error opening file. Termination");
-			System.exit(1);
-		}
-
-		try {
-			if (output != null) {
-				output.close();
-			}
-		} catch (IOException ex) {
-			System.out.println("Error closing write file.");
-		}
-	}
+        try {
+            if (output != null) {
+                output.close();
+            }
+        } catch (IOException ex) {
+            System.out.println("Error closing write file.");
+        }
+    }
 }
